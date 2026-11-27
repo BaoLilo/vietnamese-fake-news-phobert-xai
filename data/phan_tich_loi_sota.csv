@@ -1,0 +1,5 @@
+nhom,so_mau,so_tu_tb,so_tu_tv,ty_le_tren_128_tu_%,cham_than_tb,dau_hoi_tb,ty_le_hoa_tb
+TN (Tin that dung),962,132.02,42.0,24.95,0.1601,0.1435,0.0904
+FP (Tin that bao nham),43,268.6,93.0,41.86,0.814,0.8372,0.0884
+FN (Tin gia bo sot),64,111.66,54.0,21.88,0.4062,0.5625,0.089
+TP (Tin gia dung),140,213.95,82.0,36.43,1.05,0.8786,0.1016
