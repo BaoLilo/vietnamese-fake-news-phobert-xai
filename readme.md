@@ -1,32 +1,45 @@
-# Phát Hiện Tin Giả Tiếng Việt Với PhoBERT Và Giải Thích Mô Hình (XAI)
+# Phát hiện tin giả tiếng Việt bằng PhoBERT và SVM
 
-Đồ án môn **Học máy và ứng dụng** - Khoa Công nghệ Thông tin, Trường Đại học Văn Lang.
+Đồ án môn Học máy và ứng dụng - Khoa CNTT, Trường ĐH Văn Lang.
 
-* **Nhóm thực hiện:** Nhóm 13
-* **Giảng viên hướng dẫn:** ThS. Nguyễn Thái Anh
-* **Thành viên:**
-  * Châu Gia Bảo (MSSV: 2474802010021)
-  * Nguyễn Trần Khôi Vĩ (MSSV: 2474802010433)
-  * Nguyễn Lê Trọng (MSSV: 2474802010406)
+- Nhóm: 13
+- GVHD: ThS. Nguyễn Thái Anh
+- Thành viên:
+  - Châu Gia Bảo (2474802010021)
+  - Nguyễn Trần Khôi Vĩ (2474802010433)
+  - Nguyễn Lê Trọng (2474802010406)
 
-## 1. Giới thiệu bài toán
-Hệ thống phân loại tin giả tiếng Việt trên tập dữ liệu mất cân bằng (4.835 mẫu sạch sau khi loại 262 bài trùng lặp: 83,12% Tin thật và 16,88% Tin giả), đối sánh 8 mô hình cơ sở (TF-IDF kết hợp 4 đặc trưng hành vi) với 4 mô hình dựa trên vector ngữ nghĩa PhoBERT bằng kiểm định chéo 5-fold StratifiedKFold, đồng thời tích hợp giải thích cục bộ theo cơ chế che từ `<mask>` (Occlusion XAI) trên giao diện Web tại cổng 8080.
+## Tổng quan
 
-## 2. Kết quả chính trên tập kiểm tra độc lập (1.209 mẫu)
-* **Mô hình cơ sở tốt nhất (5-fold CV):** `SVM tuyến tính (TF-IDF + Hành vi)` đạt CV F1 `0,6321 ± 0,0109`; trên tập kiểm tra đạt Accuracy `87,34%`, Precision `61,23%`, Recall `68,14%`, F1-score `0,6450`.
-* **Mô hình đề xuất tốt nhất (5-fold CV):** `PhoBERT + SVM nhân RBF` đạt CV F1 `0,6871 ± 0,0487`; trên tập kiểm tra đạt Accuracy `91,15%`, Precision `76,50%`, Recall `68,63%`, F1-score `0,7235` (tăng +7,85 điểm phần trăm F1 và giảm hơn một nửa số ca báo nhầm Tin thật từ 88 xuống 43).
+Repo chứa code thực nghiệm phân loại bài đăng mạng xã hội tiếng Việt (Tin thật / Tin giả) trên 4.835 mẫu sạch sau khi loại 262 mẫu trùng (83,12% Tin thật, 16,88% Tin giả).
 
-## 3. Cấu trúc thư mục
-* `b1_tien_xu_ly.py`: Làm sạch văn bản, tách từ PyVi, loại mẫu trùng, trích xuất 4 đặc trưng hành vi và lưu thống kê vào `data/`.
-* `b2_mo_hinh_co_so.py`: Huấn luyện, kiểm định chéo 5-fold và đánh giá 8 mô hình cơ sở.
-* `b3_phobert.py`: Trích xuất vector 768 chiều từ `vinai/phobert-base-v2` (Mean-Pooling), đánh giá 4 mô hình SOTA và thống kê phân tích lỗi `FP`/`FN`.
-* `b4_giai_thich_demo.py`: Máy chủ Web Demo XAI tại cổng 8080 dùng trực tiếp mô hình thắng ở Bước 3 và che từ `<mask>`.
-* `data/`: Lưu dữ liệu sạch, các bảng CSV kết quả (`thong_ke_tien_xu_ly.csv`, `thong_ke_hanh_vi.csv`, `ket_qua_co_so.csv`, `ket_qua_sota.csv`, `bang_so_sanh_tong_hop.csv`, `phan_tich_loi_sota.csv`, `ket_qua_xai_mau.csv`) và ảnh ma trận nhầm lẫn.
+Nhóm đối sánh 8 mô hình cơ sở (TF-IDF + 4 đặc trưng hành vi) với 4 mô hình dùng vector 768 chiều từ `vinai/phobert-base-v2`, chọn mô hình qua 5-fold StratifiedKFold. Phần demo chạy web cục bộ tại cổng 8080 có tô màu từ khóa ảnh hưởng bằng cách che `<mask>`.
 
-## 4. Hướng dẫn chạy
+## Kết quả trên tập test (1.209 mẫu)
+
+| Mô hình | 5-fold CV F1 | Accuracy | Precision | Recall | Test F1 |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| Linear SVM (TF-IDF + Hành vi) | 0,6321 ± 0,0109 | 87,34% | 61,23% | 68,14% | 0,6450 |
+| PhoBERT + SVM RBF | 0,6871 ± 0,0487 | 91,15% | 76,50% | 68,63% | 0,7235 |
+
+Mô hình `PhoBERT + SVM RBF` tăng F1 thêm 7,85 điểm phần trăm so với baseline và giảm số ca báo nhầm tin thật (FP) từ 88 xuống 43.
+
+## Các file chính
+
+- `b1_tien_xu_ly.py`: làm sạch văn bản, tách từ bằng PyVi, lọc trùng và tính 4 đặc trưng hành vi.
+- `b2_mo_hinh_co_so.py`: chạy 5-fold CV và đánh giá 8 mô hình cơ sở.
+- `b3_phobert.py`: trích xuất vector PhoBERT (Mean-Pooling), đánh giá 4 mô hình và thống kê lỗi FP/FN.
+- `b4_giai_thich_demo.py`: chạy web demo XAI ở cổng 8080 dùng trực tiếp mô hình thắng ở bước 3.
+- `data/`: lưu dữ liệu sạch, các file CSV kết quả và ảnh ma trận nhầm lẫn.
+
+## Cách chạy
+
 ```bash
 pip install -r requirements.txt
 python3 b1_tien_xu_ly.py
 python3 b2_mo_hinh_co_so.py
 python3 b3_phobert.py
 python3 b4_giai_thich_demo.py
+```
+
+Sau khi chạy bước 4, mở trình duyệt tại `http://localhost:8080`.
