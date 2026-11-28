@@ -26,11 +26,11 @@ Mô hình `PhoBERT + SVM RBF` tăng F1 thêm 7,85 điểm phần trăm so với 
 
 ## Các file chính
 
-- `b1_tien_xu_ly.py`: làm sạch văn bản, tách từ bằng PyVi, lọc trùng và tính 4 đặc trưng hành vi.
-- `b2_mo_hinh_co_so.py`: chạy 5-fold CV và đánh giá 8 mô hình cơ sở.
-- `b3_phobert.py`: trích xuất vector PhoBERT (Mean-Pooling), đánh giá 4 mô hình và thống kê lỗi FP/FN.
-- `b4_giai_thich_demo.py`: chạy web demo XAI ở cổng 8080 dùng trực tiếp mô hình thắng ở bước 3.
-- `data/`: lưu dữ liệu sạch, các file CSV kết quả và ảnh ma trận nhầm lẫn.
+ `b1_tien_xu_ly.py`: làm sạch văn bản, tách từ bằng PyVi, lọc trùng và tính 4 đặc trưng hành vi.
+ `b2_mo_hinh_co_so.py`: chạy 5-fold CV và đánh giá 8 mô hình cơ sở.
+ `b3_phobert.py`: trích xuất vector PhoBERT (Mean-Pooling), đánh giá 4 mô hình và thống kê lỗi FP/FN.
+ `b4_giai_thich_demo.py`: chạy web demo XAI ở cổng 8080 dùng trực tiếp mô hình thắng ở bước 3.
+ `data/`: lưu dữ liệu sạch, các file CSV kết quả và ảnh ma trận nhầm lẫn.
 
 ## Cách chạy
 
