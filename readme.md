@@ -5,9 +5,9 @@
 - Nhóm: 13
 - GVHD: ThS. Nguyễn Thái Anh
 - Thành viên:
-  - Châu Gia Bảo (2474802010021)
-  - Nguyễn Trần Khôi Vĩ (2474802010433)
-  - Nguyễn Lê Trọng (2474802010406)
+  - Châu Gia Bảo 
+  - Nguyễn Trần Khôi Vĩ 
+  - Nguyễn Lê Trọng 
 
 ## Tổng quan
 
